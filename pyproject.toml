@@ -7,10 +7,26 @@ authors = [
     { name = "57ajay", email = "57ajay.u@gmail.com" }
 ]
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "huggingface-hub>=2.2.0",
+    "numpy>=2.5.4",
+    "safetensors>=0.8.0",
+    "tiktoken>=0.14.0",
+    "tokenizers>=0.23.3",
+    "torch>=2.14.1",
+]
 
 [project.scripts]
 tinyvllm = "tinyvllm:main"
+
+[project.optional-dependencies]
+gpu = [
+    "triton>=3.8.0",
+]
+serve = [
+    "fastapi>=0.143.0",
+    "uvicorn>=0.54.0",
+]
 
 [build-system]
 requires = ["uv_build>=0.13.0,<0.14.0"]
@@ -23,3 +39,20 @@ torch = [{ index = "pytorch-cpu" }]
 name = "pytorch-cpu"
 url = "https://download.pytorch.org/whl/cpu"
 explicit = true
+
+[dependency-groups]
+dev = [
+    "hypothesis>=6.169.0",
+    "matplotlib>=3.11.2",
+    "pytest>=9.1.1",
+    "ruff>=0.17.0",
+    "transformers>=5.19.0",
+    "triton>=3.8.0",
+]
+
+[tool.pytest.ini_options]
+markers = [
+    "gpu: marks tests as requiring a GPU (deselect with '-m \"not gpu\"')",
+    "slow: marks tests as slow",
+]
+
